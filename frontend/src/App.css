@@ -105,15 +105,18 @@
 }
 
 .unit-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
+  background: var(--cream);
+  border: 2px solid var(--forest);
   border-radius: 10px;
-  padding: 18px 14px;
-  min-width: 160px;
-  max-width: 220px;
+  padding: 14px 12px;
+  width: 200px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .unit-card-link {
@@ -122,7 +125,23 @@
   color: inherit;
 }
 
-.unit-card h4 { margin: 0; color: var(--cream); font-size: 16px }
+.unit-card h4 {
+  margin: 0;
+  color: var(--forest);
+  font-size: 16px;
+  font-family: var(--round);
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  text-align: center;
+}
+
+.unit-card-title-sample {
+  font-family: var(--heading);
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+}
+
 .term-section { width: 100%; margin-bottom: 40px }
 
 .term-section h3 {
@@ -413,5 +432,75 @@
     bottom: 12px;
     padding: 12px 16px;
     font-size: 13px;
+  }
+}
+
+.site-footer {
+  background: var(--glass-bg);
+  border-top: 1px solid var(--glass-border);
+  padding: 40px 24px 20px;
+  margin-top: 60px;
+  font-size: 14px;
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: 0 auto 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+}
+
+.footer-section h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: var(--cream);
+  font-size: 15px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section li {
+  margin-bottom: 8px;
+}
+
+.footer-section a {
+  color: var(--text);
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: var(--cream);
+}
+
+.footer-section p {
+  margin: 8px 0;
+  color: var(--text);
+}
+
+.footer-bottom {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--glass-border);
+  text-align: center;
+  font-size: 12px;
+  color: var(--text);
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .site-footer {
+    padding: 30px 16px 15px;
+    margin-top: 40px;
   }
 }

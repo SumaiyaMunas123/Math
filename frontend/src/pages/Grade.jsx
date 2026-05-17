@@ -30,7 +30,7 @@ export default function Grade(){
           <div className="unit-grid">
             {groupedTopics[term].map(t=> (
               <Link key={t.id} to={`/grade/${id}/topic/${t.id}`} className="unit-card unit-card-link">
-                <h4>{t.title}</h4>
+                <h4 className={id === '9' && t.title === 'Sets' ? 'unit-card-title-sample' : ''}>{t.title}</h4>
               </Link>
             ))}
           </div>

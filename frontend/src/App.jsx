@@ -6,6 +6,7 @@ import Topic from './pages/Topic'
 import About from './pages/About'
 import Community from './pages/Community'
 import AskQuestion from './pages/AskQuestion'
+import Footer from './components/Footer'
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
             <Route path="/ask" element={<AskQuestion />} />
           </Routes>
         </main>
+
+        <Footer />
 
         <a href="https://wa.me/94777492746?text=Hello%21%20Can%20I%20please%20get%20more%20details%20about%20this%20class%3F" className="whatsapp-cta" aria-label="Book a session" target="_blank" rel="noreferrer">Book a Session</a>
       </div>
