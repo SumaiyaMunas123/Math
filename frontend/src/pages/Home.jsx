@@ -27,17 +27,10 @@ export default function Home() {
         <p>Personal classroom for Grades 9—11. Calm, focused, and clear.</p>
       </section>
 
-      {announcements.length > 0 && (
-        <section className="announcements">
-          <h3>📢 Announcements</h3>
-          {announcements.map(a => (
-            <div key={a.id} className="announcement-item">{a.text}</div>
-          ))}
-        </section>
-      )}
+      {/* announcements removed per request */}
 
-      <section>
-        <h2>Choose your grade</h2>
+      <section style={{marginTop: 12}}>
+        <h2 style={{textAlign:'center', marginBottom: 20}}>Choose your grade</h2>
         <div className="grades">
           {grades.map(g => (
             <Link to={`/grade/${g.id}`} key={g.id} className="grade-card">

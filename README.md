@@ -14,9 +14,10 @@ A full-stack app (React + Express + dark glassy UI) to host tutorials and resour
 📚 **Content Pages**
 - **Homepage** — Hero tagline, grade cards, announcements section
 - **Grade Pages** (9, 10, 11) — Topic lists with clean styling
-- **Topic Pages** — Two-tab interface:
-  - Tutorials: Embedded YouTube videos (Sri Lanka Gov + other sources)
-  - Resources: PDF links, past paper links, NIE textbook references
+- **Topic Pages** — Three-tab interface:
+  - Tutorials: Unit-related YouTube lesson links
+  - Resources: Grade-level official links and downloads
+  - Questions: Term papers, past papers and marking-scheme sources
 - **About Page** — Tutor bio with poster image and personal touch
 - **Community Page** — Buttons linking to Telegram and WhatsApp communities
 - **Ask a Question** — Simple form to submit questions
@@ -25,7 +26,7 @@ A full-stack app (React + Express + dark glassy UI) to host tutorials and resour
 - Sticky "Book a Session" button (fixed bottom-right) → Direct WhatsApp message to +94777492746 with pre-filled message
 - Telegram group link: https://t.me/+Tq8wM_0hnnRlNWY1
 - WhatsApp community: https://chat.whatsapp.com/DxfBQaNfeu4I8FjYzO5sMq
-- Ask a Question form (currently simulated; ready for EmailJS integration)
+- Ask a Question form (sends via backend SMTP email)
 
 🛠️ **Backend**
 - Express.js API with JWT auth (removed admin panel)
@@ -61,13 +62,21 @@ Runs on `http://localhost:5173`
 - Add announcements by POSTing to `/api/content` with the backend API or manually editing `backend/index.js`
 - Announcements appear on the homepage
 
-### EmailJS Integration (Optional)
-To enable actual email sending for the "Ask a Question" form:
-1. Install EmailJS: `npm install @emailjs/browser` in `/frontend`
-2. Sign up at https://www.emailjs.com/
-3. Update `frontend/src/pages/AskQuestion.jsx`:
-   - Replace `'service_id'`, `'template_id'`, `'user_key'` with your EmailJS credentials
-   - Uncomment the EmailJS import
+### Ask Form Email Setup (SMTP)
+To enable actual email delivery from the "Ask a Question" form, configure `backend/.env`:
+1. `SMTP_HOST` - SMTP server hostname (example: smtp.gmail.com)
+2. `SMTP_PORT` - usually 587 (TLS) or 465 (SSL)
+3. `SMTP_USER` - sender account username/email
+4. `SMTP_PASS` - SMTP password or app password
+5. `SMTP_FROM` - optional sender address shown in email
+6. `QUESTION_RECEIVER_EMAIL` - destination inbox for student questions
+
+Then restart backend:
+
+```bash
+cd backend
+node index.js
+```
 
 ## Project Structure
 
@@ -102,7 +111,7 @@ Math/
 ## Next Steps
 
 - [ ] Wire Supabase/PostgreSQL for persistent storage
-- [ ] Set up EmailJS for contact form
+- [ ] Add production SMTP credentials for contact form
 - [ ] Seed with real Sri Lanka Gov YouTube links + NIE textbook pages
 - [ ] Add user authentication for students (optional)
 - [ ] Deploy to Vercel (frontend) + Railway/Render (backend)

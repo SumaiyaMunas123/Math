@@ -11,18 +11,31 @@ export default function Grade(){
   },[])
 
   const grade = content?.grades?.find(g=>g.id===id) || { id, title: `Grade ${id}`, topics: [] }
+  const groupedTopics = grade.topics.reduce((acc, topic) => {
+    const term = topic.term || 'Other Topics'
+    if (!acc[term]) acc[term] = []
+    acc[term].push(topic)
+    return acc
+  }, {})
+  const terms = ['Term 1', 'Term 2', 'Term 3', 'Other Topics'].filter(term => groupedTopics[term])
 
   return (
-    <div style={{maxWidth: 600, textAlign: 'center'}}>
+    <div style={{maxWidth: 820, width: '100%', textAlign: 'center'}}>
       <h1>{grade.title}</h1>
-      <p style={{marginBottom:24}}>Master the topics at your own pace with tutorials and resources.</p>
-      <ul style={{textAlign:'center', marginTop:12, display:'flex', flexDirection:'column', alignItems:'center', gap:8}}>
-        {(grade.topics.length?grade.topics:[{id:'geom',title:'Geometry'},{id:'algebra',title:'Algebra'},{id:'trig',title:'Trigonometry'}]).map(t=> (
-          <li key={t.id} style={{width:'100%', maxWidth:400}}>
-            <Link to={`/grade/${id}/topic/${t.id}`} className="resource-link">{t.title}</Link>
-          </li>
-        ))}
-      </ul>
+      <p style={{marginBottom:24}}>Term-by-term local syllabus units with tutorials, resources and questions.</p>
+
+      {terms.map(term => (
+        <section key={term} className="term-section">
+          <h3 style={{marginBottom: 12}}>{term}</h3>
+          <div className="unit-grid">
+            {groupedTopics[term].map(t=> (
+              <Link key={t.id} to={`/grade/${id}/topic/${t.id}`} className="unit-card unit-card-link">
+                <h4>{t.title}</h4>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ))}
     </div>
   )
 }
