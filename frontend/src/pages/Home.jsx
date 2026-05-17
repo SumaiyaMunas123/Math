@@ -15,20 +15,34 @@ export default function Home() {
     { id: '11', title: 'Grade 11' }
   ]
 
+  const announcements = content?.announcements || [
+    { id: '1', text: 'New tutorials for Algebra added this week!' },
+    { id: '2', text: 'Mock exam papers now available in Resources.' }
+  ]
+
   return (
     <div>
       <section className="hero-spot">
         <h1>Quiet, simple math help for Sri Lankan students</h1>
-        <p style={{color:'var(--text)'}}>Personal classroom for Grades 9—11. Calm, focused, and clear.</p>
+        <p>Personal classroom for Grades 9—11. Calm, focused, and clear.</p>
       </section>
 
-      <section style={{marginTop:24}}>
+      {announcements.length > 0 && (
+        <section className="announcements">
+          <h3>📢 Announcements</h3>
+          {announcements.map(a => (
+            <div key={a.id} className="announcement-item">{a.text}</div>
+          ))}
+        </section>
+      )}
+
+      <section>
         <h2>Choose your grade</h2>
         <div className="grades">
           {grades.map(g => (
             <Link to={`/grade/${g.id}`} key={g.id} className="grade-card">
               <h3>{g.title}</h3>
-              <p style={{marginTop:8, color:'var(--text)'}}>Explore topics, tutorials and resources</p>
+              <p>Explore topics, tutorials and resources</p>
             </Link>
           ))}
         </div>

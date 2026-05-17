@@ -15,30 +15,44 @@ export default function Topic(){
   const topic = grade.topics?.find(t=>t.id===topicId) || { title: topicId, tutorials:[], resources:[] }
 
   return (
-    <div>
-      <h1>{topic.title}</h1>
-      <div style={{marginTop:12}}>
-        <button onClick={()=>setTab('tutorials')} style={{marginRight:8}}>Tutorials</button>
-        <button onClick={()=>setTab('resources')}>Resources</button>
+    <div style={{maxWidth: 800}}><h1 style={{textAlign:"center"}}>{topic.title}</h1>
+      <div className="topic-tabs" style={{justifyContent:"center"}}>
+        <button 
+          className={`topic-tab ${tab==='tutorials'?'active':''}`}
+          onClick={()=>setTab('tutorials')}
+        >
+          Tutorials
+        </button>
+        <button 
+          className={`topic-tab ${tab==='resources'?'active':''}`}
+          onClick={()=>setTab('resources')}
+        >
+          Resources
+        </button>
       </div>
 
       <div style={{marginTop:16, textAlign:'left'}}>
         {tab==='tutorials' ? (
           <div>
-            {(topic.tutorials?.length?topic.tutorials:[{id:'yt1',title:'Intro',url:'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}]).map(t=> (
-              <div key={t.id} style={{marginBottom:12}}>
-                <h4 style={{margin:0}}>{t.title}</h4>
-                <div style={{marginTop:8}}>
-                  <iframe width="100%" height="200" src={t.url.replace('watch?v=','embed/')} title={t.title} frameBorder="0" allowFullScreen></iframe>
-                </div>
+            {(topic.tutorials?.length?topic.tutorials:[
+              {id:'yt1',title:'Introduction to the Topic',url:'https://www.youtube.com/embed/OTkkgDl3BYk'},
+              {id:'yt2',title:'Key Concepts Explained',url:'https://www.youtube.com/embed/OTkkgDl3BYk'}
+            ]).map(t=> (
+              <div key={t.id} className="video-container">
+                <h4>{t.title}</h4>
+                <iframe width="100%" height="300" src={t.url} title={t.title} frameBorder="0" allowFullScreen></iframe>
               </div>
             ))}
           </div>
         ) : (
           <div>
-            {(topic.resources?.length?topic.resources:[{id:'r1',title:'Past paper (pdf)',url:'https://example.com/sample.pdf'}]).map(r=> (
+            {(topic.resources?.length?topic.resources:[
+              {id:'r1',title:'Past Paper (PDF)',url:'https://nie.lk/'},
+              {id:'r2',title:'Textbook Reference (NIE)',url:'https://nie.lk/'},
+              {id:'r3',title:'Practice Questions',url:'https://nie.lk/'}
+            ]).map(r=> (
               <div key={r.id} style={{marginBottom:12}}>
-                <a href={r.url} target="_blank" rel="noreferrer" style={{color:'var(--forest)'}}>{r.title}</a>
+                <a href={r.url} target="_blank" rel="noreferrer" className="resource-link">{r.title}</a>
               </div>
             ))}
           </div>
@@ -47,3 +61,8 @@ export default function Topic(){
     </div>
   )
 }
+
+
+
+
+

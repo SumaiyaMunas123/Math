@@ -5,7 +5,7 @@ import Grade from './pages/Grade'
 import Topic from './pages/Topic'
 import About from './pages/About'
 import Community from './pages/Community'
-import Admin from './pages/Admin'
+import AskQuestion from './pages/AskQuestion'
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
           <nav className="nav-links">
             <Link to="/about">About</Link>
             <Link to="/community">Community</Link>
-            <Link to="/admin">Admin</Link>
+            <Link to="/ask">Ask a Question</Link>
           </nav>
         </header>
 
@@ -27,11 +27,11 @@ function App() {
             <Route path="/grade/:id/topic/:topicId" element={<Topic />} />
             <Route path="/about" element={<About />} />
             <Route path="/community" element={<Community />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/ask" element={<AskQuestion />} />
           </Routes>
         </main>
 
-        <a href="https://chat.whatsapp.com/DxfBQaNfeu4I8FjYzO5sMq" className="whatsapp-cta" aria-label="Book a session" target="_blank" rel="noreferrer">Book a Session</a>
+        <a href="https://wa.me/94777492746?text=Hello%21%20Can%20I%20please%20get%20more%20details%20about%20this%20class%3F" className="whatsapp-cta" aria-label="Book a session" target="_blank" rel="noreferrer">Book a Session</a>
       </div>
     </BrowserRouter>
   )

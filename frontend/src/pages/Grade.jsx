@@ -13,13 +13,13 @@ export default function Grade(){
   const grade = content?.grades?.find(g=>g.id===id) || { id, title: `Grade ${id}`, topics: [] }
 
   return (
-    <div>
+    <div style={{maxWidth: 600, textAlign: 'center'}}>
       <h1>{grade.title}</h1>
-      <p style={{color:'var(--text)'}}>Topics</p>
-      <ul style={{textAlign:'left', marginTop:12}}>
-        {(grade.topics.length?grade.topics:[{id:'geom',title:'Geometry (placeholder)'},{id:'algebra',title:'Algebra basics'}]).map(t=> (
-          <li key={t.id} style={{margin:'10px 0'}}>
-            <Link to={`/grade/${id}/topic/${t.id}`} style={{color:'var(--forest)'}}>{t.title}</Link>
+      <p style={{marginBottom:24}}>Master the topics at your own pace with tutorials and resources.</p>
+      <ul style={{textAlign:'center', marginTop:12, display:'flex', flexDirection:'column', alignItems:'center', gap:8}}>
+        {(grade.topics.length?grade.topics:[{id:'geom',title:'Geometry'},{id:'algebra',title:'Algebra'},{id:'trig',title:'Trigonometry'}]).map(t=> (
+          <li key={t.id} style={{width:'100%', maxWidth:400}}>
+            <Link to={`/grade/${id}/topic/${t.id}`} className="resource-link">{t.title}</Link>
           </li>
         ))}
       </ul>
