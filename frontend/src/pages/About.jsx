@@ -3,9 +3,6 @@ export default function About(){
     <div>
       <h1>About</h1>
       <section className="about-section">
-        <div className="about-image">
-          <img src="/post.jpeg" alt="Math tutor" />
-        </div>
         <div className="about-text">
           <h3>A personal approach to learning</h3>
           <p>This is a small personal classroom built for Grades 9–11 students in Sri Lanka. The aim is to keep resources calm, focused and easy to use.</p>

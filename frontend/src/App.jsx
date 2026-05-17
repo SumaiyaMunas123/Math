@@ -15,6 +15,7 @@ function App() {
         <header className="site-header">
           <Link to="/" className="brand">Math Classroom</Link>
           <nav className="nav-links">
+            <Link to="/">Home</Link>
             <Link to="/about">About</Link>
             <Link to="/community">Community</Link>
             <Link to="/ask">Ask a Question</Link>

@@ -33,9 +33,11 @@ export default function Footer() {
         </div>
 
         <div className="footer-section">
-          <h4>Contact</h4>
-          <p>WhatsApp: <a href="https://wa.me/94777492746?text=Hello%21%20Can%20I%20please%20get%20more%20details%20about%20this%20class%3F" target="_blank" rel="noreferrer">+94 777 492 746</a></p>
-          <p style={{fontSize: '13px', marginTop: '8px', opacity: 0.8}}>For inquiries and support</p>
+          <h4>Community</h4>
+          <ul>
+            <li><a href="https://t.me/+Tq8wM_0hnnRlNWY1" target="_blank" rel="noreferrer">Telegram</a></li>
+            <li><a href="https://chat.whatsapp.com/DxfBQaNfeu4I8FjYzO5sMq" target="_blank" rel="noreferrer">WhatsApp</a></li>
+          </ul>
         </div>
       </div>
 
