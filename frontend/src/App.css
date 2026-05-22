@@ -9,6 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   padding: 16px 24px;
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
@@ -30,6 +31,8 @@
 .nav-links {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .nav-links a {
@@ -38,6 +41,20 @@
   transition: all 0.3s ease;
   position: relative;
   padding: 6px 0;
+}
+
+.nav-button {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--glass-border);
+  box-shadow: none;
+  padding: 6px 12px;
+}
+
+.nav-user {
+  color: var(--text);
+  font-size: 13px;
+  white-space: nowrap;
 }
 
 .nav-links a::after {
@@ -115,6 +132,120 @@
   justify-content: center;
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.auth-shell {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0 24px;
+}
+
+.auth-card {
+  width: min(100%, 520px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.auth-form {
+  margin-top: 20px;
+}
+
+.auth-switch {
+  margin-top: 16px;
+  color: var(--text);
+}
+
+.auth-switch a {
+  color: var(--text-h);
+  text-decoration: underline;
+}
+
+.admin-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--glass-border);
+  text-align: left;
+  color: var(--text);
+}
+
+.admin-table th {
+  color: var(--text-h);
+}
+
+.recordings-lock-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.access-message {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
+}
+
+.recordings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.recording-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.recording-card iframe {
+  margin-top: 10px;
+  border: 0;
+  border-radius: 8px;
+}
+
+.recording-card-locked {
+  position: relative;
+  overflow: hidden;
+}
+
+.recording-card-locked > * {
+  filter: blur(2px);
+}
+
+.recording-card-locked .recording-overlay {
+  filter: none;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--text-h);
+  z-index: 1;
 }
 
 .unit-card-link {

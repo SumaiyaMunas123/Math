@@ -1,11 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import { useAuth } from '../context/AuthContext'
+import { supabase } from '../lib/supabaseClient'
 
 export default function Topic(){
   const { id, topicId } = useParams()
   const [content, setContent] = useState(null)
   const [tab, setTab] = useState('tutorials')
+  const [recordings, setRecordings] = useState([])
+  const [recordingsLoading, setRecordingsLoading] = useState(false)
+  const [showAccessMessage, setShowAccessMessage] = useState(false)
+  const { hasAccess, isAdmin } = useAuth()
 
   useEffect(()=>{
     axios.get('/api/content').then(r=>setContent(r.data)).catch(()=>{})
@@ -17,6 +23,8 @@ export default function Topic(){
   const resources = topic.resources?.length ? topic.resources : []
   const papers = topic.papers?.length ? topic.papers : []
   const studentQuestions = topic.studentQuestions?.length ? topic.studentQuestions : []
+  const canViewRecordings = hasAccess || isAdmin
+  const accessMessage = useMemo(() => 'Send the agreed payment via bank transfer or your preferred payment method and WhatsApp your email to +94 777 492 746 to get access unlocked within 24 hours.', [])
 
   const [localQuestions, setLocalQuestions] = useState(studentQuestions)
   const [qForm, setQForm] = useState({ name: '', email: '', question: '' })
@@ -30,6 +38,35 @@ export default function Topic(){
       setLocalQuestions(t?.studentQuestions || [])
     }
   }, [content, id, topicId])
+
+  useEffect(() => {
+    if (!canViewRecordings || !supabase) {
+      setRecordings([])
+      return
+    }
+
+    const loadRecordings = async () => {
+      setRecordingsLoading(true)
+      const { data, error } = await supabase
+        .from('topic_recordings')
+        .select('id, title, video_url, preview_text, sort_order')
+        .eq('grade_id', id)
+        .eq('topic_id', topicId)
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true })
+
+      if (!error) {
+        setRecordings(data || [])
+      } else {
+        console.error(error)
+        setRecordings([])
+      }
+
+      setRecordingsLoading(false)
+    }
+
+    loadRecordings()
+  }, [canViewRecordings, id, topicId])
 
   const handleQChange = (e) => {
     const { name, value } = e.target
@@ -91,6 +128,12 @@ export default function Topic(){
           Videos
         </button>
         <button 
+          className={`topic-tab ${tab==='recordings'?'active':''}`}
+          onClick={()=>setTab('recordings')}
+        >
+          Recordings
+        </button>
+        <button 
           className={`topic-tab ${tab==='questions'?'active':''}`}
           onClick={()=>setTab('questions')}
         >
@@ -126,6 +169,73 @@ export default function Topic(){
             {tutorials.map(v=> (
               <a key={v.id} href={v.url} target="_blank" rel="noreferrer" className="resource-link" style={{minWidth:240}}>{v.title}</a>
             ))}
+          </div>
+        )}
+
+        {tab==='recordings' && (
+          <div style={{maxWidth:760, margin:'0 auto'}}>
+            {!canViewRecordings ? (
+              <div>
+                <div className="recordings-lock-panel">
+                  <h3>Recordings are locked</h3>
+                  <p>Free notes, resources and YouTube links stay open. Recordings unlock after admin approval.</p>
+                  <button type="button" onClick={() => setShowAccessMessage(prev => !prev)}>
+                    Get Access
+                  </button>
+                  {showAccessMessage && <p className="access-message">{accessMessage}</p>}
+                </div>
+
+                <div className="recordings-grid">
+                  {[1, 2, 3].map((item) => (
+                    <div key={item} className="recording-card recording-card-locked">
+                      <div className="recording-overlay">Locked preview</div>
+                      <h4>Recording {item}</h4>
+                      <p>Unlocked after payment verification.</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div>
+                {recordingsLoading && <p style={{ textAlign: 'center' }}>Loading recordings...</p>}
+                {!recordingsLoading && recordings.length === 0 && (
+                  <div className="recordings-lock-panel">
+                    <h3>No recordings added yet</h3>
+                    <p>Once you add rows in Supabase, unlocked students will see them here.</p>
+                  </div>
+                )}
+                <div className="recordings-grid">
+                  {recordings.map((recording) => {
+                    const embedUrl = recording.video_url.includes('youtube.com/watch')
+                      ? `https://www.youtube.com/embed/${new URL(recording.video_url).searchParams.get('v')}`
+                      : recording.video_url.includes('youtu.be/')
+                        ? `https://www.youtube.com/embed/${recording.video_url.split('/').pop().split('?')[0]}`
+                        : recording.video_url
+
+                    return (
+                      <div key={recording.id} className="recording-card">
+                        <h4>{recording.title}</h4>
+                        {embedUrl.includes('youtube.com/embed/') ? (
+                          <iframe
+                            width="100%"
+                            height="220"
+                            src={embedUrl}
+                            title={recording.title}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        ) : (
+                          <a className="resource-link" href={recording.video_url} target="_blank" rel="noreferrer">
+                            Open recording
+                          </a>
+                        )}
+                        {recording.preview_text && <p style={{ marginTop: 10 }}>{recording.preview_text}</p>}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         )}
 

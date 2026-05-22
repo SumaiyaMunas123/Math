@@ -51,6 +51,34 @@ npm run dev
 ```
 Runs on `http://localhost:5173`
 
+## Deploying to Vercel
+
+When the frontend is deployed to Vercel, it cannot use the local Vite proxy from `frontend/vite.config.js`. Set the backend API URL as an environment variable in Vercel so the app can fetch `/api/content` and show grade units.
+
+1. Deploy the backend first and copy its public URL.
+2. In Vercel, add an environment variable named `VITE_API_BASE`.
+3. Set its value to your backend URL, for example `https://your-backend.example.com`.
+4. Redeploy the frontend so Vite picks up the variable.
+
+Example frontend env file:
+
+```bash
+VITE_API_BASE=https://your-backend.example.com
+```
+
+## Supabase Auth Setup
+
+Use the frontend with Supabase Auth by setting these environment variables in Vercel and locally:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+
+The SQL you can paste into the Supabase editor is in [supabase-schema.sql](supabase-schema.sql). It creates:
+
+- `profiles` for name, email, contact number, role, and access permission
+- `topic_recordings` for locked video content
+- RLS policies for user/admin visibility and manual access control
+
 ## Configuration
 
 ### WhatsApp "Book a Session" Button
