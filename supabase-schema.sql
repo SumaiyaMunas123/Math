@@ -134,3 +134,51 @@ for all
 to authenticated
 using (public.is_admin())
 with check (public.is_admin());
+
+create table if not exists public.unit_access (
+  id uuid primary key default gen_random_uuid(),
+  profile_id uuid not null references public.profiles(id) on delete cascade,
+  grade_id text not null,
+  topic_id text not null,
+  is_unlocked boolean not null default false,
+  unlocked_at timestamptz,
+  unlocked_by uuid references public.profiles(id) on delete set null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique (profile_id, grade_id, topic_id)
+);
+
+alter table public.unit_access enable row level security;
+
+drop policy if exists "Users can read own unit access" on public.unit_access;
+drop policy if exists "Admins can manage unit access" on public.unit_access;
+
+create policy "Users can read own unit access"
+on public.unit_access
+for select
+to authenticated
+using (auth.uid() = profile_id or public.is_admin());
+
+create policy "Admins can manage unit access"
+on public.unit_access
+for all
+to authenticated
+using (public.is_admin())
+with check (public.is_admin());
+
+create or replace function public.has_unit_access(p_grade_id text, p_topic_id text)
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select exists (
+    select 1
+    from public.unit_access ua
+    where ua.profile_id = auth.uid()
+      and ua.grade_id = p_grade_id
+      and ua.topic_id = p_topic_id
+      and ua.is_unlocked = true
+  );
+$$;

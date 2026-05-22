@@ -22,6 +22,8 @@
   letter-spacing: 0.3px;
   color: var(--text);
   background: var(--dark-bg);
+  background-color: var(--dark-bg);
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -35,6 +37,7 @@
 body {
   margin: 0;
   background: var(--dark-bg);
+  background-color: var(--dark-bg);
   position: relative;
   overflow-x: hidden;
 }
@@ -51,6 +54,7 @@ html, body, #root {
     radial-gradient(circle at 20% 50%, rgba(59, 79, 58, 0.08) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(59, 79, 58, 0.05) 0%, transparent 40%),
     var(--dark-bg);
+  background-color: var(--dark-bg);
 }
 
 h1, h2, h3, h4, h5, h6 {
